@@ -3,11 +3,14 @@ package org.wcci.apimastery;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Objects;
 
 @Entity
 public class Artist {
 
     private String name;
+    private int age;
+    private String bio;
 
     @Id
     @GeneratedValue
@@ -15,8 +18,10 @@ public class Artist {
 
     public Artist(){}
 
-    public Artist(String name){
+    public Artist(String name, int age, String bio){
         this.name = name;
+        this.age = age;
+        this.bio = bio;
     }
 
     public String getName() {
@@ -25,5 +30,29 @@ public class Artist {
 
     public Long getId(){
         return id;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Artist artist = (Artist) o;
+        return age == artist.age &&
+                Objects.equals(name, artist.name) &&
+                Objects.equals(bio, artist.bio) &&
+                Objects.equals(id, artist.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age, bio, id);
     }
 }
