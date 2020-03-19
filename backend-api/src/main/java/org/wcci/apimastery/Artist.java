@@ -1,8 +1,7 @@
 package org.wcci.apimastery;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -15,13 +14,18 @@ public class Artist {
     @Id
     @GeneratedValue
     Long id;
+    @ManyToOne
+    private Medium medium;
+
+    private Collection<SocialMedia> socialMedia;
 
     public Artist(){}
 
-    public Artist(String name, int age, String bio){
+    public Artist(String name, int age, String bio, Medium medium){
         this.name = name;
         this.age = age;
         this.bio = bio;
+        this.medium = medium;
     }
 
     public String getName() {
@@ -40,6 +44,8 @@ public class Artist {
         return bio;
     }
 
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -54,5 +60,13 @@ public class Artist {
     @Override
     public int hashCode() {
         return Objects.hash(name, age, bio, id);
+    }
+
+    public Medium getMedium() {
+        return medium;
+    }
+
+    public Collection<SocialMedia> getSocialMedia() {
+        return socialMedia;
     }
 }
