@@ -1,6 +1,7 @@
 package org.wcci.apimastery;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -17,15 +18,17 @@ public class Artist {
     @ManyToOne
     private Medium medium;
 
-    private Collection<SocialMedia> socialMedia;
+    @ElementCollection
+    private Collection<String> socialMedia;
 
     public Artist(){}
 
-    public Artist(String name, int age, String bio, Medium medium){
+    public Artist(String name, int age, String bio, Medium medium, String ...socialMedia){
         this.name = name;
         this.age = age;
         this.bio = bio;
         this.medium = medium;
+        this.socialMedia = Arrays.asList(socialMedia);
     }
 
     public String getName() {
@@ -66,7 +69,11 @@ public class Artist {
         return medium;
     }
 
-    public Collection<SocialMedia> getSocialMedia() {
+    public Collection<String> getSocialMedia() {
         return socialMedia;
+    }
+
+    public void addNewSocialMedia(String mediaToAdd){
+        socialMedia.add(mediaToAdd);
     }
 }

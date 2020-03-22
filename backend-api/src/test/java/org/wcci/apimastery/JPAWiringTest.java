@@ -28,7 +28,7 @@ public class JPAWiringTest {
     public void setUp(){
         testMedium = new Medium("Test Medium");
 
-        artist = new Artist("TestArtist", 2, "testBio", testMedium);
+        artist = new Artist("TestArtist", 2, "testBio", testMedium, "testMedia.com");
         mediumRepo.save(testMedium);
         artistRepo.save(artist);
         entityManager.flush();
@@ -68,8 +68,17 @@ public class JPAWiringTest {
 
     @Test
     public void artistShouldHaveSocialMedia(){
-        Artist retrievedArtist = artistRepo.findByName("Test Artist");
-        assertThat(retrievedArtist.getSocialMedia()).contains
+        Artist retrievedArtist = artistRepo.findByName("TestArtist");
+        assertThat(retrievedArtist.getSocialMedia()).contains("testMedia.com");
+    }
+
+    @Test
+    public void artistCanHaveManySocialMedia(){
+        Artist retrievedArtist = artistRepo.findByName("TestArtist");
+        retrievedArtist.addNewSocialMedia("facebook.com");
+        assertThat(retrievedArtist.getSocialMedia()).contains("testMedia.com");
+        assertThat(retrievedArtist.getSocialMedia()).contains("facebook.com");
+
     }
 
 
